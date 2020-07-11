@@ -34,4 +34,21 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* Camera = nullptr;
+
+	// Members for pawn movement
+	FVector MoveDirection;
+	FQuat RotationDirection;
+
+	float MoveSpeed = 500.f;
+	float RotationSpeed = 200.f;
+
+	// Functions to calculate changes to tank movement and rotation.
+	// Called everytime BindAxes is updated.
+	void CalculateMoveInput(float Value);
+	void CalculateRotationInput(float Value);
+
+	// Functions to update movement and rotation of the tank
+	void Move();
+	void Rotate();
+
 };

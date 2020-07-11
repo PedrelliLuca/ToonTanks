@@ -27,11 +27,48 @@ void APawnTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+    Rotate();
+    Move();
 }
 
 // Called to bind functionality to input
 void APawnTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+    
+    PlayerInputComponent->BindAxis("MoveForward", this, &APawnTank::CalculateMoveInput);
+    PlayerInputComponent->BindAxis("Turn", this, &APawnTank::CalculateRotationInput);
 
+}
+
+void APawnTank::CalculateMoveInput(float Value)
+{
+    // Value > 0: forward; Value < 0: backward;
+    //
+    // Multiplying by GetWorld()->DeltaTimeSeconds makes the movement framerate independent.
+    //
+    // Y and Z components are set to 0 because our tank is only supposed to move forward and
+    // backward based on its rotation.
+    MoveDirection = FVector(Value * MoveSpeed * GetWorld()->DeltaTimeSeconds, 0, 0);;
+}
+
+void APawnTank::CalculateRotationInput(float Value)
+{
+    // Value > 0: right; Value < 0: left
+    float RotationAmount = Value * RotationSpeed * GetWorld()->DeltaTimeSeconds;
+    FRotator Rotation(0, RotationAmount, 0);
+    RotationDirection = FQuat(Rotation);
+}
+
+void APawnTank::Move()
+{
+    // Adds a delta to the location of this component in its local reference frame.
+    // The second parameter (sweep) is to set if collisions should be checked when moving.
+    AddActorLocalOffset(MoveDirection, true);
+}
+
+void APawnTank::Rotate()
+{
+    // Similar to AddActorLocalOffset
+    AddActorLocalRotation(RotationDirection, true);
 }
