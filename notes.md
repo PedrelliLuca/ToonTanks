@@ -14,3 +14,13 @@ Turret class has everything we need to make the enemy turret function.
 - Point to spawn projectile from: scene component
 
 For the tank, since it's the pawn controlled by the player, we will add a camera component and a spring arm component, which gives us extra control on the camera.
+
+### Lesson 137
+
+Access specifiers explained
+
+For components we'll use:
+- VisibleAnywhere (default + instance)
+- BlueprintReadOnly (we want to see them in blueprint because they are visual components and blueprints allow us to take a look at them)
+- Category = "Components", for tidiness
+- meta = (AllowPrivateAccess = "true") because the compiler normally wouldn't allow private memebers like our components to be visible in the editor
