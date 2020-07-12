@@ -38,7 +38,7 @@ void APawnTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
     
     PlayerInputComponent->BindAxis("MoveForward", this, &APawnTank::CalculateMoveInput);
     PlayerInputComponent->BindAxis("Turn", this, &APawnTank::CalculateRotationInput);
-
+    PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APawnTank::Fire);
 }
 
 void APawnTank::CalculateMoveInput(float Value)
@@ -71,4 +71,13 @@ void APawnTank::Rotate()
 {
     // Similar to AddActorLocalOffset
     AddActorLocalRotation(RotationDirection, true);
+}
+
+void APawnTank::HandleDestruction()
+{
+    Super::HandleDestruction(); // We first execute the universal functionalities
+
+    // TODO: Tank-specific functionalities:
+    // 1) Hide visual components
+    // 2) Disable inputs
 }
