@@ -115,3 +115,21 @@ Therefore, we can create these functionalities in the PawnBase in the protected 
   - Disable movement and inputs
 
   This way we keep the camera!
+
+### Lesson 145 - Creating actor classes
+
+For Projectiles, we're gonna use actor classes because they need less functionalities than our tank and turrets (which are pawns).
+
+Components:
+- Projectile movement component: standard component from unreal that provides constant movement to the class that it's on, including things like gravity, homing, bouncing etc..
+- Static mesh
+- We want to assign a damage type -> we're gonna implement a template class `TSubclassOf<UDamageType>`
+- floats: Speed and damage.
+
+Why `TSubclassOf<UDamageType>` and not simply `UDamageType*`? It's down to the options and type security that this provides: we're unable to just declare a UDamageType and create a pointer to it and then name it damage type like we would have done in the past as this will provide compile errors.
+
+An alternative would be to declare a `UClass*`, which is much broader than any pointer to component we created so far! We could then make it point to a UDamageType instance and this would work with no compilation errors. Problem: other developers, unfamiliar with our work and intentions, might assign any other derived class to this pointer (and there is a ton of them, it's very easy to make mistakes), not just a UDamageType, leading to errors. Therefore, using such a broad pointer is considered a bad practice.
+
+`TSubclassOf<UDamageType>` will ensure that the end user will only be able to select something that is either the base UDamageType or a subclass of that.
+
+`UProjectileMovementComponent` instances don't have a transform, so they don't belong in the scene hierarchy or inherit any transforms from their parent classes. Therefore, we don't need to do the usual process of attaching these to anything.
