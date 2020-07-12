@@ -38,15 +38,17 @@ private:
 	// Members for pawn movement
 	FVector MoveDirection;
 	FQuat RotationDirection;
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float MoveSpeed = 500.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotationSpeed = 200.f;
 
 	// Functions to calculate changes to tank movement and rotation.
 	// Called everytime BindAxes is updated.
 	void CalculateMoveInput(float Value);
 	void CalculateRotationInput(float Value);
-
+ 
 	// Functions to update movement and rotation of the tank
 	void Move();
 	void Rotate();
