@@ -140,4 +140,20 @@ If, once spawned, the bullet is frozen, that's because as soon as the projectile
 
 To avoid this, just move the scene component that handles its spawn farther away from the turret and you'll be fine!
 
-At the moment, the projectiles class keep hanging around after being fired, we need to fix this:
+At the moment, the projectiles keep hanging around after being fired, we need to fix this:
+
+### Lesson 147 - Using dynamic delegates
+
+We'll be seeing how we can implement dynamic delegates to our projectile class.
+
+**Dynamic delegates allow us to bind a custom function to be fired whenever a default function on the class is run.**
+
+The ProjectileMesh is the component, and we want to bind `OnComponentHit` to it. This is done via `AddDynamic` + the function that we want to run each time `OnComponentHit` is called.
+
+When we create our custom function or the the custom version of this, that we'll be using to run our hit functionality and bind to this delegates, this kind of works in a similar way to overwriting a parent class function in that **we still need to provide all of the function arguments**.
+
+The reason that we're using `GetInstigatorController()` on the owner is that controllers kind of work within reference to the owning pawn, whether that be a player controller, such as one possessed by a human player, or an A.I. controller, such as something which will be possessing an instance of AI-Pawn. Basically, the bullet is asking "what was controlling the thing that spawned me?".
+
+To recap: the delegate `AProjectileBase::OnHit` is called every time `StaticMesh` `OnComponentHit` function is called, and we're able to access all of the argument `OnComponentHit` would take.
+
+`AProjectileBase::OnHit` is basically a custom version, an override, of `OnComponentHit`.

@@ -51,7 +51,7 @@ void APawnBase::Fire()
 			ProjectileSpawnPoint->GetComponentLocation(),
 			ProjectileSpawnPoint->GetComponentRotation()
 		);
-		TempProjectile->SetOwner(this);
+		TempProjectile->SetOwner(this); // Needed in AProjectileBase::OnHit to avoid self-damage
 	}
 }
 

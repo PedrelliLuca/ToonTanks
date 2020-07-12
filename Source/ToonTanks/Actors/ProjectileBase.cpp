@@ -2,8 +2,8 @@
 
 
 #include "ProjectileBase.h"
-// #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AProjectileBase::AProjectileBase()
@@ -14,6 +14,8 @@ AProjectileBase::AProjectileBase()
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(
 		TEXT("Projectile Mesh")
 	);
+	// Binding delegate function to OnComponentHit
+	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
 	RootComponent = ProjectileMesh;
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(
@@ -34,4 +36,40 @@ void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+// Called everytime the StaticMesh OnComponentHit function is called
+void AProjectileBase::OnHit(
+	UPrimitiveComponent* HitComp,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	FVector NormalImpulse,
+	const FHitResult& Hit
+)
+{
+	// We get a reference to the owning actor, i.e. the pawn that spawns our projectile
+	AActor* MyOwner = GetOwner();
+
+	// If for some reason this we can't get a valid ref, return as we need to check against the
+	// owner
+	if (!MyOwner)
+		return;
+
+	// We deal damage only if the following conditions on the other actor are all true:
+	if (OtherActor != NULL && OtherActor != this && OtherActor != MyOwner)
+	{
+		// We hit a valid actor!! Deal damage to the other actor
+		UGameplayStatics::ApplyDamage(
+			OtherActor,
+			Damage,
+			MyOwner->GetInstigatorController(), // Reference to owning player controller
+			this, // Damage causer
+			DamageType
+		);
+	}
+
+	// TODO: effects 
+
+	// We finally remove the projectile from play
+	Destroy();
 }

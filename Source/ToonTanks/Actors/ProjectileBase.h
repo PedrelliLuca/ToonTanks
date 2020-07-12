@@ -33,6 +33,15 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage", meta = (AllowPrivateAccess = "true"))
 	float Damage = 50.f;
 
+	UFUNCTION() // Dynamic delegates always need to be declare UFUNCTION()
+	void OnHit( // The arguments of the delegate must be the same of the original function
+		UPrimitiveComponent* HitComp,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		FVector NormalImpulse,
+		const FHitResult& Hit
+	);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
