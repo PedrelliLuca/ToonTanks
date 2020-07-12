@@ -28,10 +28,10 @@ protected:
 private:
 
 	// Function which will be called on a repeating timer.
-	void CheckFireCondition();
+	void CheckFireCondition() const;
 
 	// Function to check if the player's tank is in range.
-	float ReturnDistanceToPlayer();
+	float ReturnDistanceToPlayer() const;
 
 	// How often we call CheckFireCondition().
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", 

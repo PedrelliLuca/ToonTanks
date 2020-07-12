@@ -87,3 +87,23 @@ In `CheckFireCondition()` we can now check if the player PawnTank exists We don'
 `Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));` is an expensive instruction, which is why we do that only once in BeginPlay and assign it to a ptr instead of doing it in `CheckFireCondition()`.
 
 Don't forget to go to blueprint -> class settings -> parent class -> PawnTurret otherwise your code won't run and the editor will believe that the turret is a PawnBase!!
+
+### Lesson 143 - Virtual functions
+
+Things both PawnTank and PawnTurret need to have:
+
+- Fire: they both should be able to fire projectiles to destroy the opponent.
+- RotateTurret: A way to rotate the turret with respect to their base.
+- HandleDestruction: Health and a functionality to be destroyed / removed from game when the health goes below a certain threshold.
+
+Therefore, we can create these functionalities in the PawnBase in the protected section.
+
+`RotateTurret()` and `Fire()` will only be called, not overridden, they'll carry out the same functionalities in both the tank and turret pawn classed.
+
+`HandleDestruction()` however will do different things in Turret and Tank.
+- On turrets we can safely call AActor::Destroy()
+- On the player controlled class calling Destroy() leads to janky results (the camera attached to the object gets destroyed and we jump to a default camera in the world). For this reason, on player controlled class it's better to:
+  - Hide visual components
+  - Disable movement and inputs
+
+  This way we keep the

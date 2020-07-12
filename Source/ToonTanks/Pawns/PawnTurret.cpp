@@ -29,7 +29,7 @@ void APawnTurret::Tick(float DeltaTime)
 
 }
 
-void APawnTurret::CheckFireCondition()
+void APawnTurret::CheckFireCondition() const
 {
     // Check if we have a valid reference to the player.
     if (!PlayerPawn)
@@ -45,7 +45,7 @@ void APawnTurret::CheckFireCondition()
     }
 }
 
-float APawnTurret::ReturnDistanceToPlayer()
+float APawnTurret::ReturnDistanceToPlayer() const
 {
     // Check if we have a valid reference to the player.
     if (!PlayerPawn)
