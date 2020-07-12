@@ -32,3 +32,7 @@ Now we have the details of the components exposed in our blueprints
 The new class won't appear in the editor until you next restart the project.
 
 Let's make a PawnTank class and add a SpringArm and Camera components to it!
+
+## Lesson 139 - Pawn movement input
+
+You need to change the collisions presets of the capsule components to "block all", if you want sweeping to work. Setting it to true in `AddActorLocalOffset` is not enough. Then, make sure the capsule component doesn't overlap the floor, or your tank won't move at all!
