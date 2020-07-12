@@ -44,3 +44,36 @@ When you expose new varibles in the editor you need to close and reopen the proj
 Camera movement lag and rotation lag on the springarm give a more dynamic movement.
 
 Changes in the class blueprints reflect on all the instances, but you can change values on a single instance too.
+
+### Lesson 141 - Pawn Turret
+
+Why `CheckFireCondition` is on a timer?
+
+We could put it on a tick event where the timer is always being reset as a kind of cool down. But as we don't need an update quite often for the time tracking to look believable, we can save a little bit of performance here and also have a little bit extra control over the timer update rate.
+
+Binding the `FireRateTimerHandler` timer to the `CheckFireCondition` function:
+```cpp
+GetWorld()->GetTimerManager().SetTimer(FireRateTimerHandler, this,
+        &APawnTurret::CheckFireCondition, FireRate, true, false);
+```
+- Second-last parameter: looping. If true, the function is called every FireRate seconds instead of just once.
+
+- Last parameter: initial delay. False -> the turret starts firing immediately.
+
+We could have just created a function named Fire and have this update on tick function: when certain conditions are met, we can fire projectiles from the turret.
+
+However the tank class will also need a fire functionality! Therefore this is going to be something that we can create in the base class.
+
+So, for readability, we'll use this check fire condition and this will be responsible for checking that the desired condition has been met to allow the firing functionality.
+
+So `CheckFireCondition` is going to help avoid it looking like a really dumb A.I. that just fires every so many seconds, regardless of whether the player is alive, whether it's in range, and it'll just make it look that little bit more reactive to what's happening in the game.
+
+```cpp
+void APawnTurret::CheckFireCondition()
+{
+    // If player == nullptr || player == Dead
+    //    return;
+    // If player IS in range
+    //    FIRE!!;
+}
+```
