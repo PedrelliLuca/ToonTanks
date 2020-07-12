@@ -27,9 +27,13 @@ void APawnTurret::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+    if(!PlayerPawn)
+        return;
+    
+    RotateTurret(PlayerPawn->GetActorLocation());
 }
 
-void APawnTurret::CheckFireCondition() const
+void APawnTurret::CheckFireCondition()
 {
     // Check if we have a valid reference to the player.
     if (!PlayerPawn)
@@ -41,7 +45,7 @@ void APawnTurret::CheckFireCondition() const
     if (ReturnDistanceToPlayer() <= FireRange)
     {
         // TODO: Fire (to be implemented in PawnBase class)
-        UE_LOG(LogTemp, Warning, TEXT("%s FIRE!"), *GetName());
+        Fire();
     }
 }
 
@@ -53,4 +57,12 @@ float APawnTurret::ReturnDistanceToPlayer() const
     
     // Formula to get distance between the tank and this turret
     return (PlayerPawn->GetActorLocation() - GetActorLocation()).Size();
+}
+
+void APawnTurret::HandleDestruction()
+{
+    Super::HandleDestruction(); // We first execute the universal functionalities
+
+    // Turret-specific functionalities
+    Destroy();
 }

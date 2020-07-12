@@ -106,4 +106,4 @@ Therefore, we can create these functionalities in the PawnBase in the protected 
   - Hide visual components
   - Disable movement and inputs
 
-  This way we keep the
+  This way we keep the camera!

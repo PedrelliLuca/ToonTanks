@@ -25,10 +25,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void HandleDestruction() override;
+
 private:
 
 	// Function which will be called on a repeating timer.
-	void CheckFireCondition() const;
+	void CheckFireCondition();
 
 	// Function to check if the player's tank is in range.
 	float ReturnDistanceToPlayer() const;
