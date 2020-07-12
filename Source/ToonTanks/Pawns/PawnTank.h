@@ -8,6 +8,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class APlayerController;
  
 UCLASS()
 class TOONTANKS_API APawnTank : public APawnBase
@@ -45,6 +46,9 @@ private:
 	float MoveSpeed = 500.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotationSpeed = 200.f;
+
+	APlayerController* PlayerController; // Needed to get cursor and rotate turret
+	FHitResult TraceHitResult; // Out parameter of GetHitResultUnderCursor, see PawnTank.cpp
 
 	// Functions to calculate changes to tank movement and rotation.
 	// Called everytime BindAxes is updated.

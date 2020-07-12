@@ -98,9 +98,17 @@ Things both PawnTank and PawnTurret need to have:
 
 Therefore, we can create these functionalities in the PawnBase in the protected section.
 
-`RotateTurret()` and `Fire()` will only be called, not overridden, they'll carry out the same functionalities in both the tank and turret pawn classed.
+`RotateTurret()` and `Fire()` will carry out the same functionalities in both the tank and turret pawn classed, the only difference is when they get called. For this reason, these function won't be overridden in PawnTank and PawnTurret.
 
-`HandleDestruction()` however will do different things in Turret and Tank.
+`Fire()` is called:
+- By turrets's `CheckFireCondition()` every X seconds if fire conditions are met.
+- By tank when the LeftMouseButton is pressent (IE_Pressed PlayerInputComponent->BindAction)
+
+`RotateTurret()` is called:
+- Every tick by the turret. We pass the player pawn location to it.
+- Every tick by the tank. We pass the mouse position to it.
+
+`HandleDestruction()` however needs to do different things in Turret and Tank, therefore we need to make it virtual and override it.
 - On turrets we can safely call AActor::Destroy()
 - On the player controlled class calling Destroy() leads to janky results (the camera attached to the object gets destroyed and we jump to a default camera in the world). For this reason, on player controlled class it's better to:
   - Hide visual components

@@ -3,6 +3,7 @@
 
 #include "PawnTank.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
 
 APawnTank::APawnTank()
@@ -20,6 +21,7 @@ void APawnTank::BeginPlay()
 {
 	Super::BeginPlay();
 	
+    PlayerController = Cast<APlayerController>(GetController());
 }
 
 // Called every frame
@@ -27,8 +29,16 @@ void APawnTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+    // Moving tank
     Rotate();
     Move();
+
+    // Rotating tank turret
+    if(PlayerController)
+    {
+        PlayerController->GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
+        RotateTurret(TraceHitResult.ImpactPoint);
+    }
 }
 
 // Called to bind functionality to input
