@@ -77,3 +77,13 @@ void APawnTurret::CheckFireCondition()
     //    FIRE!!;
 }
 ```
+
+### Lesson 142 - Find distance between
+
+`(UGameplayStatics::GetPlayerPawn(this, 0)` finds the player0 pawn. `this` refers to the current world reference, 0 stands for "Player0". The return type is `APawn`, so we need to cast this to `APawnTank`.
+
+In `CheckFireCondition()` we can now check if the player PawnTank exists We don't have anything to check if the player's PawnTank is still alive, we'll come back to that later.
+
+`Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));` is an expensive instruction, which is why we do that only once in BeginPlay and assign it to a ptr instead of doing it in `CheckFireCondition()`.
+
+Don't forget to go to blueprint -> class settings -> parent class -> PawnTurret otherwise your code won't run and the editor will believe that the turret is a PawnBase!!
