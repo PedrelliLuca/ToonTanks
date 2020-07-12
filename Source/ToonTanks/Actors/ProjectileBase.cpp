@@ -26,7 +26,7 @@ AProjectileBase::AProjectileBase()
 	ProjectileMovement->InitialSpeed = MovementSpeed;
 	ProjectileMovement->MaxSpeed = MovementSpeed;
 
-	InitialLifeSpan = 3.f; // Inherited from actor, how long the actor lives befor dying.
+	InitialLifeSpan = 3.f; // Inherited from actor, how long the actor lasts befor dying.
 }
 
 // Called when the game starts or when spawned

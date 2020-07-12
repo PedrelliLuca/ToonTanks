@@ -6,8 +6,10 @@
 #include "GameFramework/Pawn.h"
 #include "PawnBase.generated.h"
 
-// This component is not already in the includes above
+// You need this list of classes when something you're using in the header is not already in the
+// includes above. The actual includes will be in the related .cpp
 class UCapsuleComponent;
+class AProjectileBase;
 
 UCLASS()
 class TOONTANKS_API APawnBase : public APawn
@@ -30,6 +32,10 @@ private:
 	// Scene component to act as the projectile spawn point7
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* ProjectileSpawnPoint = nullptr;
+
+	// Variables.
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AProjectileBase> ProjectileClass;
 
 public:
 	// Sets default values for this pawn's properties

@@ -133,3 +133,11 @@ An alternative would be to declare a `UClass*`, which is much broader than any p
 `TSubclassOf<UDamageType>` will ensure that the end user will only be able to select something that is either the base UDamageType or a subclass of that.
 
 `UProjectileMovementComponent` instances don't have a transform, so they don't belong in the scene hierarchy or inherit any transforms from their parent classes. Therefore, we don't need to do the usual process of attaching these to anything.
+
+### Lesson 146 - Spawning actors
+
+If, once spawned, the bullet is frozen, that's because as soon as the projectile instance is being spawned, it's overlapping with the pawn classes and the projectile movement component will then just stop its movement.
+
+To avoid this, just move the scene component that handles its spawn farther away from the turret and you'll be fine!
+
+At the moment, the projectiles class keep hanging around after being fired, we need to fix this:
