@@ -38,7 +38,8 @@ void AProjectileBase::BeginPlay()
 	
 }
 
-// Called everytime the StaticMesh OnComponentHit function is called
+// Thanks to dynamic binding, this is automatically called everytime the StaticMesh OnComponentHit
+// function is called (i.e. everytime the mesh hits (or is hit by) something solid.)
 void AProjectileBase::OnHit(
 	UPrimitiveComponent* HitComp,
 	AActor* OtherActor,
@@ -58,7 +59,7 @@ void AProjectileBase::OnHit(
 	// We deal damage only if the following conditions on the other actor are all true:
 	if (OtherActor != NULL && OtherActor != this && OtherActor != MyOwner)
 	{
-		// We hit a valid actor!! Deal damage to the other actor
+		// We hit a valid actor!! ApplyDamage calls OnTakeAnyDamage on OtherActor.
 		UGameplayStatics::ApplyDamage(
 			OtherActor,
 			Damage,
@@ -68,7 +69,7 @@ void AProjectileBase::OnHit(
 		);
 	}
 
-	// TODO: effects 
+	// TODO: some visual effects 
 
 	// We finally remove the projectile from play
 	Destroy();

@@ -12,7 +12,8 @@ void ATankGameModeBase::BeginPlay()
 
 void ATankGameModeBase::ActorDied(AActor* DeadActor)
 {
-    // Check what type of actor died. 
+    UE_LOG(LogTemp, Warning, TEXT("Actor %s died!"), *DeadActor->GetName());
+    // Check what type of actor died.
     // Tank -> go to lose condition
     // Turret -> tally.
 }

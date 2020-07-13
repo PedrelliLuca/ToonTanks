@@ -187,3 +187,18 @@ Both can be placed on actors, however
 hierarchy: SceneComponent is a child of ActorComponent
 
 Health doesn't need to be placed in the world and other components don't need health -> our health component can be an actor component!
+
+### Lesson 150 - Adding health functionality
+
+Clamp(x, a, b) makes sure that the value x (obtained by a calculation of some sort) doesn't get beyond the boundaries of the interval [a, b]; if x<a -> x is made equal to a, if x>b then x is made equal to b.
+
+We're not passing anything to our owning actor to let them know that they've died. That's purely due to the complexity of our game: we know that we only have two pawns classes in the game and both of them are kind of relevant to the game flow via the game mode class.
+
+So, rather than passing off multiple messages, one to the game mode to let them know that something's died and then one to the owning pawn also let it know that it died, we're just gonna pass this to the game mode.
+
+The game mode can then pass informations to other classes if needed.
+
+#### Damage flow
+Projectile class executes ApplyDamage on OtherActor -> this fires OnTakeAnyDamage on OtherActor, i.e. the pawn that was hit -> thanks to dynamic binding we fire TakeDamage instead!
+
+DON'T FORGET TO ATTACH THE COMPONENT TO YOUR PAWNS 
