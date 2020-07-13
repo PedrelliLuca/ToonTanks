@@ -157,3 +157,19 @@ The reason that we're using `GetInstigatorController()` on the owner is that con
 To recap: the delegate `AProjectileBase::OnHit` is called every time `StaticMesh` `OnComponentHit` function is called, and we're able to access all of the argument `OnComponentHit` would take.
 
 `AProjectileBase::OnHit` is basically a custom version, an override, of `OnComponentHit`.
+
+### Lesson 148 - Creating GameMode classes
+
+Game Mode Base is one of the standard options when creating a c++ class.
+
+A game mode dictates the rules of gameplay (its rules, scoring, which pawn is controlled by the player, the game state etc).
+
+`BeginPlay()` is the usual standard unreal virtual void function. It will collect all relevant infos when the game starts (for example, the # of turrets).
+
+`UFUNCTION(BlueprintImplementableEvent)` will allow us to handle all of the functionality for these two functions in the derived blueprint class. Certain things like setting timers, creating widgets etc are a lot more efficient and time friendly inside of blueprints than in the private section.
+
+`BlueprintImplementableEvent` don't need any C++ implementations. In fact, you'll get errors if you give them one. Why do we define them in the code then? So that we can call them from other functions!
+
+So the way that Unreal works is that every game that we create will need a game mode class to control what is spawned in the level after the level is initialized. If you don't provide one like we haven't so far, then the project will create a default game mode class prefilled with some default classes that we can't override.
+
+By setting the default pawn class to be BP_PawnTank we can delete the tank that was previously in the map, one will be automatically created at PlayerStart when the game begins and we'll be in control!
