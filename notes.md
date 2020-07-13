@@ -173,3 +173,17 @@ A game mode dictates the rules of gameplay (its rules, scoring, which pawn is co
 So the way that Unreal works is that every game that we create will need a game mode class to control what is spawned in the level after the level is initialized. If you don't provide one like we haven't so far, then the project will create a default game mode class prefilled with some default classes that we can't override.
 
 By setting the default pawn class to be BP_PawnTank we can delete the tank that was previously in the map, one will be automatically created at PlayerStart when the game begins and we'll be in control!
+
+### Lesson 149 - Creating a health component
+
+We'll be creating our health component, which will be a flexible class, allowing us to record health and damage for any actor or pawn in the world that we place this on. You could technically assign health to static actors too (e.g. barrels), but we'll only assign health to our pawns.
+
+#### Actor components VS scene components
+
+Both can be placed on actors, however
+- A scene component **has a transform**, i.e. it has a place in the world and can be moved around in the world when attached to other scene components
+- An actor component can only be attached to an actor class (or its childrens like pawns etc) and not to other components since it doesn't have a transform and, therefore, a representation/place in the world.
+
+hierarchy: SceneComponent is a child of ActorComponent
+
+Health doesn't need to be placed in the world and other components don't need health -> our health component can be an actor component!
