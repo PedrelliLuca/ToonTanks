@@ -41,8 +41,9 @@ public:
 	// Sets default values for this pawn's properties
 	APawnBase();
 
-protected:
+	void PawnDestroyed(); 
 
+protected:
 	// For PawnTank: the FVector is the mouse location
 	// For PawnTurret: the FVector is the PlayerTank location
 	void RotateTurret(FVector LookAtTarget);

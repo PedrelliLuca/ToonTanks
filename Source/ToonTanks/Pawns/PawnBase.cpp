@@ -65,3 +65,8 @@ void APawnBase::HandleDestruction()
 
 	// -- PawnTank - Inform GameMode player died -> Hide() all components && stop movement Input.
 }
+
+void APawnBase::PawnDestroyed()
+{
+	HandleDestruction();
+}

@@ -201,4 +201,10 @@ The game mode can then pass informations to other classes if needed.
 #### Damage flow
 Projectile class executes ApplyDamage on OtherActor -> this fires OnTakeAnyDamage on OtherActor, i.e. the pawn that was hit -> thanks to dynamic binding we fire TakeDamage instead!
 
-DON'T FORGET TO ATTACH THE COMPONENT TO YOUR PAWNS 
+DON'T FORGET TO ATTACH THE COMPONENT TO YOUR PAWNS
+
+### Lesson 151 - GameMode ActorDied
+
+`GetAllActorsOfClass` function returns us an array of all the actor instances of a specified subclass that are in the level.
+
+Functions that require a world context object `const UObject * WorldContextObject`, like `GetAllActorsOfClass` or `GetPlayerPawn` you don't need to pass `GetWorld()`: any object that is the world you're interested in will do just fine! Therefore, often `this` is a valid choice!
