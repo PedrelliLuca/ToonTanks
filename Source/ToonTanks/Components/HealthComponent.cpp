@@ -12,7 +12,6 @@ UHealthComponent::UHealthComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 
-	Health = DefaultHealth;
 }
 
 
@@ -20,6 +19,8 @@ UHealthComponent::UHealthComponent()
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Health = DefaultHealth;
 
 	GameModeRef = Cast<ATankGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 
@@ -43,7 +44,7 @@ void UHealthComponent::TakeDamage(
 		return;
 
 	Health = FMath::Clamp(Health-Damage, 0.f, DefaultHealth);
-
+	
 	if (Health <= 0)
 		if (GameModeRef)
 			// Called only once thanks to the Health == 0 check above.

@@ -232,3 +232,7 @@ The GameStart and GameOver BP functions, which are called on the C++ side (TankG
 There is a create widget node, but this is not enough to show the widgets, this node just creates them! To show them we need another node, AddToViewport. But, **BEFORE DOING THAT, we need to set the values our widgets need!**
 
 Flow: Create widgets -> set variables -> add to viewport.
+
+# Lesson 155 - Dynamic variable update debug
+
+Never, ever, but dynamic variable updates like `Health = DefaultHealth` in the class constructor!! Do them in BeginPlay. Otherwise, if you try changing values from BPs, they won't affect the instances on the map.
