@@ -208,3 +208,15 @@ DON'T FORGET TO ATTACH THE COMPONENT TO YOUR PAWNS
 `GetAllActorsOfClass` function returns us an array of all the actor instances of a specified subclass that are in the level.
 
 Functions that require a world context object `const UObject * WorldContextObject`, like `GetAllActorsOfClass` or `GetPlayerPawn` you don't need to pass `GetWorld()`: any object that is the world you're interested in will do just fine! Therefore, often `this` is a valid choice!
+
+### Lesson 152 - Widget blueprints
+
+Let's create the widget that appears at the beginning of our game
+
+Content browser: Right click -> User interface -> widget blueprint
+
+Hierarchy: controls order in which things are displayed in the canvas.
+
+When you select a widget component, like a text box, if you want to implement a logic for it (i.e. use it in the graph section) **don't forget to tick the "IsVariable" checkbox** in the topright of the details panel.
+
+Careful at constructors in unreal: if you place there reference to things you might easily get crashes, because constructors are executed before BeginPlay() and things do not exist in the world before BeginPlay().
