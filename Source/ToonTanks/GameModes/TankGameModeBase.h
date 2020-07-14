@@ -35,6 +35,10 @@ protected:
 private:
 	int32 TargetTurrets = 0;
 
+	// Variable to control starting countdown duration. int because int32 isn't accepted by BPs.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Loop", meta = (AllowPrivateAccess = "true"))
+	int StartDelay = 3; 
+
 	UPROPERTY(
 		VisibleAnywhere, 
 		BlueprintReadOnly, 

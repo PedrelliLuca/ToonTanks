@@ -229,4 +229,6 @@ To override the functions that we have in our C++ class, we go over to the funct
 
 The GameStart and GameOver BP functions, which are called on the C++ side (TankGameModeBase.cpp) will create our widgets!
 
-There is a create widget node, but this is not enough to show the widgets, this node just creates them! To show them we need another node, AddToViewport
+There is a create widget node, but this is not enough to show the widgets, this node just creates them! To show them we need another node, AddToViewport. But, **BEFORE DOING THAT, we need to set the values our widgets need!**
+
+Flow: Create widgets -> set variables -> add to viewport.

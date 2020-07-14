@@ -41,8 +41,6 @@ void APawnBase::RotateTurret(FVector LookAtTarget)
 
 void APawnBase::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s FIRE!"), *GetName());
-
 	if (ProjectileClass && ProjectileSpawnPoint)
 	{
 		// Spawn a projectile instance at location towards rotation. "Temp" because it lives for 3s.
