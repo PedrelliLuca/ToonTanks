@@ -209,7 +209,7 @@ DON'T FORGET TO ATTACH THE COMPONENT TO YOUR PAWNS
 
 Functions that require a world context object `const UObject * WorldContextObject`, like `GetAllActorsOfClass` or `GetPlayerPawn` you don't need to pass `GetWorld()`: any object that is the world you're interested in will do just fine! Therefore, often `this` is a valid choice!
 
-### Lesson 152 - Widget blueprints
+### Lesson 152 + 153 - Widget blueprints
 
 Let's create the widget that appears at the beginning of our game
 
@@ -220,3 +220,13 @@ Hierarchy: controls order in which things are displayed in the canvas.
 When you select a widget component, like a text box, if you want to implement a logic for it (i.e. use it in the graph section) **don't forget to tick the "IsVariable" checkbox** in the topright of the details panel.
 
 Careful at constructors in unreal: if you place there reference to things you might easily get crashes, because constructors are executed before BeginPlay() and things do not exist in the world before BeginPlay().
+
+### Lesson 154 - GameMode blueprint
+
+**Through the gamemode blueprint**, we'll be creating and displaying our start and end widgets to the screen, which will encapsulate the flow of gameplay that we currently have going.
+
+To override the functions that we have in our C++ class, we go over to the function section, highlight the function text to get the override option, and then press that button to dropdown the available functions.
+
+The GameStart and GameOver BP functions, which are called on the C++ side (TankGameModeBase.cpp) will create our widgets!
+
+There is a create widget node, but this is not enough to show the widgets, this node just creates them! To show them we need another node, AddToViewport
