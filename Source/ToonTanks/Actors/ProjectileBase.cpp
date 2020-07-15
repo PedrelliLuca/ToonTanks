@@ -90,6 +90,12 @@ void AProjectileBase::OnHit(
 		if (HitSound)
 			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
 		
+		// Camera shake
+		if (HitShake)
+			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(
+				HitShake,
+				1 // so that we always play the shake at full volume that we set in the BP classes.
+			);
 		// We finally remove the projectile from play
 		Destroy();
 	}

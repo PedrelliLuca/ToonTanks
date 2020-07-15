@@ -75,6 +75,11 @@ void APawnBase::HandleDestruction()
 		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
 
 	// Camera shake
+	if (DeathShake)
+		GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(
+			DeathShake,
+			1 // so that we always play the shake at full volume that we set in the BP classes.
+		);
 }
 
 void APawnBase::PawnDestroyed()
