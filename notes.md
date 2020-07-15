@@ -252,3 +252,14 @@ For example: player pawn class can call its owning player controller and enable 
 We'll use the playercontroller class to enable/disable input and to show the mouse cursor.
 
 Bug: if an input is still pressed when the game ends it stays.
+
+### lesson 157 - PawnTank destruction
+
+Create a new variable `bAlive` and a getter in the tank header to communicate to the turrets when the player is dead. At tank destruction:
+
+1. `SetActorHiddenInGame(true)`
+
+2. `SetActorTickEnabled(false)` to disable inputs
+3. Set `bAlive = false`.
+
+When the turret `CheckFireCondition`, if the player is dead turrets stop firing.

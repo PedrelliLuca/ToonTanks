@@ -25,6 +25,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	bool GetPlayerAlive() const; // So that turrets can interrogate the tank
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -49,6 +51,8 @@ private:
 
 	APlayerController* PlayerController; // Needed to get cursor and rotate turret
 	FHitResult TraceHitResult; // Out parameter of GetHitResultUnderCursor, see PawnTank.cpp
+
+	bool bAlive = true; // So that turrets stop tracking and shooting when the player loses.
 
 	// Functions to calculate changes to tank movement and rotation.
 	// Called everytime BindAxes is updated.

@@ -87,7 +87,17 @@ void APawnTank::HandleDestruction()
 {
     Super::HandleDestruction(); // We first execute the universal functionalities
 
-    // TODO: Tank-specific functionalities:
-    // 1) Hide visual components
+    bAlive = false;
+
+    // We can't destroy the pawn controlled by the player, this would lead to a ton of bugs and
+    // potential errors. Therefore, we only give the illusion that the tank was destroyed by:
+    // 1) Hiding visual components
+    SetActorHiddenInGame(true);
     // 2) Disable inputs
+    SetActorTickEnabled(false);
+}
+
+bool APawnTank::GetPlayerAlive() const
+{
+    return bAlive;
 }

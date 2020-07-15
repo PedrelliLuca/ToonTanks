@@ -41,18 +41,13 @@ void APawnTurret::Tick(float DeltaTime)
 
 void APawnTurret::CheckFireCondition()
 {
-    // Check if we have a valid reference to the player.
-    if (!PlayerPawn)
+    // If we don't have a valid reference to the player or he lost, we don't do anything.
+    if (!PlayerPawn || !PlayerPawn->GetPlayerAlive())
         return;
-
-    // TODO: Check if player is dead (to be implemented in PawnTank class)
 
     // If player IS in range -> fire!!!
     if (ReturnDistanceToPlayer() <= FireRange)
-    {
-        // TODO: Fire (to be implemented in PawnBase class)
         Fire();
-    }
 }
 
 float APawnTurret::ReturnDistanceToPlayer() const
