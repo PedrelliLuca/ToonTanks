@@ -283,3 +283,9 @@ USoundBase for the effect; `USoundBase`. Launch and Hit sounds on projectiles, D
 Believe it or not: Unreal has a camera shaking class! And since it's almost completely property-based, we're just gonna do all the logic in blueprints by deriving two BP classes from it, one for Hit and one for Explode.
 
 Once you defined your values for both classes, it's time to implement them using `TSubclassOf<UCameraShake>` in our PawnBase and ProjectileBase classes.
+
+### Lesson 163 Tidying up
+
+- To make the projectile fall to the ground in a more stilish way tick "RotationFollowVelocity" in the ProjectileMovement component.
+
+- We can change how the cursor is visualized from the playercontroller.
