@@ -41,6 +41,10 @@ void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// When the projectile gets spawned, we play its LaunchSound
+	if (LaunchSound)
+		UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
+
 }
 
 // Thanks to dynamic binding, this is automatically called everytime the StaticMesh OnComponentHit
@@ -73,7 +77,7 @@ void AProjectileBase::OnHit(
 			DamageType
 		);
 
-		// Visual effects
+		// Visual effect
 		if (HitParticle)
 			UGameplayStatics::SpawnEmitterAtLocation(
 				this,
@@ -81,6 +85,10 @@ void AProjectileBase::OnHit(
 				GetActorLocation(),
 				FRotator::ZeroRotator
 			);
+		
+		// Sound effect
+		if (HitSound)
+			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
 		
 		// We finally remove the projectile from play
 		Destroy();

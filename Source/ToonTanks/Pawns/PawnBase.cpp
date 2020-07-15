@@ -60,6 +60,7 @@ void APawnBase::Fire()
 void APawnBase::HandleDestruction()
 {
 	// These are called by children overrides too.
+
 	// Play death effect particles
 	if (DeathParticle)
 		UGameplayStatics::SpawnEmitterAtLocation(
@@ -69,7 +70,11 @@ void APawnBase::HandleDestruction()
 			FRotator::ZeroRotator
 		);
 	
-	// Sound and camera shake
+	// Sound effect
+	if (DeathSound)
+		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
+
+	// Camera shake
 }
 
 void APawnBase::PawnDestroyed()
