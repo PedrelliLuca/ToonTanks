@@ -250,3 +250,5 @@ We will, however, be seeing some of the things that we can get our player contro
 For example: player pawn class can call its owning player controller and enable or disable the input during a cutscene.
 
 We'll use the playercontroller class to enable/disable input and to show the mouse cursor.
+
+Bug: if an input is still pressed when the game ends it stays.
