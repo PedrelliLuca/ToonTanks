@@ -16,8 +16,14 @@ void APawnTurret::BeginPlay()
 	Super::BeginPlay();
 	
     // Binding CheckFireCondition to the timer
-    GetWorld()->GetTimerManager().SetTimer(FireRateTimerHandle, this,
-        &APawnTurret::CheckFireCondition, FireRate, true, false);
+    GetWorld()->GetTimerManager().SetTimer(
+        FireRateTimerHandle,
+        this,
+        &APawnTurret::CheckFireCondition,
+        FireRate,
+        true,
+        false
+    );
 
     PlayerPawn = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
 }

@@ -8,6 +8,7 @@
 
 class APawnTank;
 class APawnTurret;
+class APlayerControllerBase;
 
 /**
  * 
@@ -46,6 +47,8 @@ private:
 		meta = (AllowPrivateAccess = "true")
 	)
 	APawnTank* PlayerTank = nullptr;
+
+	APlayerControllerBase* PlayerControllerRef = nullptr;
 
 	void HandleGameStart();
 	void HandleGameOver(bool bPlayerWon);

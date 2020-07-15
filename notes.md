@@ -233,6 +233,20 @@ There is a create widget node, but this is not enough to show the widgets, this 
 
 Flow: Create widgets -> set variables -> add to viewport.
 
-# Lesson 155 - Dynamic variable update debug
+### Lesson 155 - Dynamic variable update debug
 
 Never, ever, but dynamic variable updates like `Health = DefaultHealth` in the class constructor!! Do them in BeginPlay. Otherwise, if you try changing values from BPs, they won't affect the instances on the map.
+
+### Lesson 156 - Player controllers
+
+Player controllers are the interface between the player or A.I. and that controlled pawn.
+
+We won't be going into A.I. controllers in this section as our A.I. is very simplistic and doesn't really need a controller to handle communication between things like the AI Blackboard system.
+
+We will, however, be seeing some of the things that we can get our player controller to handle.
+
+**The player controller is the interface that directly receives the input notifications when something is pressed and also what is used to enable or disable the player input.**
+
+For example: player pawn class can call its owning player controller and enable or disable the input during a cutscene.
+
+We'll use the playercontroller class to enable/disable input and to show the mouse cursor.
