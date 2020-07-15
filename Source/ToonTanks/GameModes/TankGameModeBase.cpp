@@ -35,6 +35,9 @@ void ATankGameModeBase::ActorDied(AActor* DeadActor)
     {
         PlayerTank->PawnDestroyed();
         HandleGameOver(false); // the player didn't win
+
+        if (PlayerControllerRef)
+            PlayerControllerRef->SetPlayerEnabledState(false); // Player cannot move anymore
     }
     // If the following cast is successful it means that DeadActor is a APawnTurret ptr (dynamic casting)
     else if (APawnTurret* DestroyedTurret = Cast<APawnTurret>(DeadActor))
@@ -81,9 +84,6 @@ void ATankGameModeBase::HandleGameStart()
 
 void ATankGameModeBase::HandleGameOver(bool bPlayerWon)
 {
-    if (PlayerControllerRef)
-        PlayerControllerRef->SetPlayerEnabledState(false); // Player cannot move anymore
-
     // If 0 turrets are left, show win result.
     // If tank was destroyed, show lose result.
     GameOver(bPlayerWon); // The other BP function
