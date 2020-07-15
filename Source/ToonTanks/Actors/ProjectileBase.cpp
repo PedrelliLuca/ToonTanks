@@ -57,7 +57,7 @@ void AProjectileBase::OnHit(
 		return;
 
 	// We deal damage only if the following conditions on the other actor are all true:
-	if (OtherActor != NULL && OtherActor != this && OtherActor != MyOwner)
+	if (OtherActor != nullptr && OtherActor != this && OtherActor != MyOwner)
 	{
 		// We hit a valid actor!! ApplyDamage calls OnTakeAnyDamage on OtherActor.
 		UGameplayStatics::ApplyDamage(
@@ -67,10 +67,17 @@ void AProjectileBase::OnHit(
 			this, // Damage causer
 			DamageType
 		);
+
+		// Visual effects
+		if (HitParticle)
+			UGameplayStatics::SpawnEmitterAtLocation(
+				this,
+				HitParticle,
+				GetActorLocation(),
+				FRotator::ZeroRotator
+			);
+		
+		// We finally remove the projectile from play
+		Destroy();
 	}
-
-	// TODO: some visual effects 
-
-	// We finally remove the projectile from play
-	Destroy();
 }

@@ -263,3 +263,11 @@ Create a new variable `bAlive` and a getter in the tank header to communicate to
 3. Set `bAlive = false`.
 
 When the turret `CheckFireCondition`, if the player is dead turrets stop firing.
+
+THIS CONCLUDES OUR GAME LOOP :) Now we just need to play with the effects
+
+### Lesson 158 - Spawning particles
+
+Let's implement particle effects! component class: `UParticleSystem`.
+
+Let's also add the UHealthComponent to the class and make the constructor create one by default, since it's something that every tank / turret needs.

@@ -2,8 +2,10 @@
 
 #include "PawnBase.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "ToonTanks/Actors/ProjectileBase.h"
+#include "ToonTanks/Components/HealthComponent.h"
 
 // Sets default values
 APawnBase::APawnBase()
@@ -21,6 +23,9 @@ APawnBase::APawnBase()
 
 	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
 	TurretMesh->SetupAttachment(BaseMesh);  // movement & rotation inherited from base mesh
+
+	// Our custom health component. Is an actor component, it has no transform -> no atachment.
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh); // movement & rotation inherited from turret mesh
@@ -55,13 +60,17 @@ void APawnBase::Fire()
 
 void APawnBase::HandleDestruction()
 {
-	// Universal functionality ---
-	// Play death effect particles, sound and camera shake.
-
-	// Then do unique child overrides
-	// -- PawnTurret - Call GameMode to inform it the turret died -> then Destroy() self.
-
-	// -- PawnTank - Inform GameMode player died -> Hide() all components && stop movement Input.
+	// These are called by children overrides too.
+	// Play death effect particles
+	if (DeathParticle)
+		UGameplayStatics::SpawnEmitterAtLocation(
+			this,
+			DeathParticle,
+			GetActorLocation(),
+			FRotator::ZeroRotator
+		);
+	
+	// Sound and camera shake
 }
 
 void APawnBase::PawnDestroyed()

@@ -10,6 +10,8 @@
 // includes above. The actual includes will be in the related .cpp
 class UCapsuleComponent;
 class AProjectileBase;
+class UHealthComponent;
+
 
 UCLASS()
 class TOONTANKS_API APawnBase : public APawn
@@ -33,9 +35,15 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* ProjectileSpawnPoint = nullptr;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UHealthComponent* HealthComponent = nullptr;
+
 	// Variables.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AProjectileBase> ProjectileClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects", meta = (AllowPrivateAccess = "true"))
+	UParticleSystem* DeathParticle;
 
 public:
 	// Sets default values for this pawn's properties
