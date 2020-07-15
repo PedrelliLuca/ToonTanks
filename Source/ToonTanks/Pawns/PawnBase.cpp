@@ -16,7 +16,6 @@ APawnBase::APawnBase()
 	CapsuleComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Component"));
 	RootComponent = CapsuleComp;
 
-	
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
 	// We want the mesh to inherit the movement and the rotation from the capsule component
 	BaseMesh->SetupAttachment(RootComponent);

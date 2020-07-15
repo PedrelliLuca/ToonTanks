@@ -266,8 +266,10 @@ When the turret `CheckFireCondition`, if the player is dead turrets stop firing.
 
 THIS CONCLUDES OUR GAME LOOP :) Now we just need to play with the effects
 
-### Lesson 158 - Spawning particles
+### Lesson 158 + 159 - Spawning particles
 
 Let's implement particle effects! component class: `UParticleSystem`.
 
 Let's also add the UHealthComponent to the class and make the constructor create one by default, since it's something that every tank / turret needs.
+
+We can also implement particles as components, `UParticleSystemComponent` which is what we want to do for our particle trail effect. The component keeps spawning particles over its life based on an updating position of the projectile. It is a scene component, so it needs to be attached to something, we'll attach it to the rootcomponent of the projectile (i.e. its root component).
