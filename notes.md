@@ -284,7 +284,7 @@ Believe it or not: Unreal has a camera shaking class! And since it's almost comp
 
 Once you defined your values for both classes, it's time to implement them using `TSubclassOf<UCameraShake>` in our PawnBase and ProjectileBase classes.
 
-### Lesson 163 Tidying up
+### Lesson 163 Tyding up
 
 - To make the projectile fall to the ground in a more stilish way tick "RotationFollowVelocity" in the ProjectileMovement component.
 
