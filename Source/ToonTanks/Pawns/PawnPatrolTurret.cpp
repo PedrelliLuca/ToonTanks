@@ -47,31 +47,27 @@ void APawnPatrolTurret::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
     
     CurrentLocation = GetActorLocation();
+    float DeltaMovement = PatrolSpeed * DeltaTime;
 
     if (bMoveTowardTarget)
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Towards Target"));
-        SetActorLocation(UKismetMathLibrary::VInterpTo(
-            CurrentLocation,
-            TargetLocation,
-            DeltaTime,
-            PatrolSpeed
+        // The DeltaMovement must be projected onto x and y axes.
+        SetActorLocation(FVector(
+            CurrentLocation.X + DeltaMovement * FGenericPlatformMath::Cos(Angle),
+            CurrentLocation.Y + DeltaMovement * FGenericPlatformMath::Sin(Angle),
+            CurrentLocation.Z
         ));
-
-        if (CurrentLocation == TargetLocation)
-            bMoveTowardTarget = false;
-    }
     else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Towards Initial"));
-        SetActorLocation(UKismetMathLibrary::VInterpTo(
-            CurrentLocation,
-            InitialLocation,
-            DeltaTime,
-            PatrolSpeed
+        SetActorLocation(FVector(
+            CurrentLocation.X - DeltaMovement * FGenericPlatformMath::Cos(Angle),
+            CurrentLocation.Y - DeltaMovement * FGenericPlatformMath::Sin(Angle),
+            CurrentLocation.Z
         ));
 
-        if (CurrentLocation == InitialLocation)
-            bMoveTowardTarget = true;
+    TotalMovement += DeltaMovement;
+    if (TotalMovement >= PatrolAmplitude)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("CurrentLocation: %s"), *CurrentLocation.ToString());
+        bMoveTowardTarget = !bMoveTowardTarget;
+        TotalMovement = 0.f;
     }
 }

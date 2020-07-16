@@ -17,14 +17,15 @@ class TOONTANKS_API APawnPatrolTurret : public APawnTurret
 private:
 	// VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Patrol Movement", meta = (AllowPrivateAccess = "true"))
-	float PatrolSpeed = 1.f;
+	float PatrolSpeed = 100.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Patrol Movement", meta = (AllowPrivateAccess = "true"))
-	float PatrolAmplitude = 300.f;
+	float PatrolAmplitude = 500.f;
 
 	FVector InitialLocation, CurrentLocation, TargetLocation;
 
 	float Angle;
+	float TotalMovement = 0.f;
 
 	bool bMoveTowardTarget = true;
 
