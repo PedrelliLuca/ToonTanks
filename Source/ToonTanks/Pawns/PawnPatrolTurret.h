@@ -22,7 +22,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Patrol Movement", meta = (AllowPrivateAccess = "true"))
 	float PatrolAmplitude = 500.f;
 
-	FVector InitialLocation, CurrentLocation, TargetLocation;
+	FVector CurrentLocation;
 
 	float Angle; // needed to move in the direction the RootComponent is facing
 	float TotalMovement = 0.f; // How much of the PatrolAmplitude we traveled so far
@@ -31,8 +31,6 @@ private:
 	bool bMoveTowardTarget = true;
 
 	// FUNCTIONS
-	FVector ComputeTargetLocation();
-
 	bool MovePatrolTurret(float DeltaMovement);
 
 	void ReverseMovement();

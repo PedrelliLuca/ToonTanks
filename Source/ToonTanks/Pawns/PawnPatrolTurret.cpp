@@ -13,29 +13,8 @@ void APawnPatrolTurret::BeginPlay()
 {
     Super::BeginPlay();
 
-    // First extreme of the patrol line
-    InitialLocation = GetActorLocation();
-
-    // The other extreme of the patrol line, can be computed from Amplitude and Angle alone.
-    TargetLocation = ComputeTargetLocation();
-}
-
-// Function to compute the other extreme of the patrol, called only at BeginPlay
-FVector APawnPatrolTurret::ComputeTargetLocation()
-{
-    float AmplitudeX, AmplitudeY;
-
-    // The angle must be in radians for the following Cos/Sin functions to work.
+    // The angle must be in radians for the Cos/Sin functions to work.
     Angle = GetActorRotation().Yaw * UKismetMathLibrary::GetPI() / 180;
-
-    AmplitudeX = PatrolAmplitude * FGenericPlatformMath::Cos(Angle);
-    AmplitudeY = PatrolAmplitude * FGenericPlatformMath::Sin(Angle);
-
-    return FVector(
-        InitialLocation.X + AmplitudeX,
-        InitialLocation.Y + AmplitudeY,
-        InitialLocation.Z // No movement along Z direction, obviously
-    );
 }
 
 // Called every frame
