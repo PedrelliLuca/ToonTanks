@@ -24,13 +24,18 @@ private:
 
 	FVector InitialLocation, CurrentLocation, TargetLocation;
 
-	float Angle;
-	float TotalMovement = 0.f;
+	float Angle; // needed to move in the direction the RootComponent is facing
+	float TotalMovement = 0.f; // How much of the PatrolAmplitude we traveled so far
 
+	// true: we move from point A (Initial) to B (Target); false: we move from point B to A
 	bool bMoveTowardTarget = true;
 
 	// FUNCTIONS
 	FVector ComputeTargetLocation();
+
+	bool MovePatrolTurret(float DeltaMovement);
+
+	void ReverseMovement();
 
 protected:
 	// Called when the game starts or when spawned
