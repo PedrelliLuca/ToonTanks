@@ -48,29 +48,32 @@ void APawnPatrolTurret::Tick(float DeltaTime)
     
     CurrentLocation = GetActorLocation();
     float DeltaMovement = PatrolSpeed * DeltaTime;
+    // SetActLocation returns true if no collision happend and the movement was successfull
+    bool bNoCollision;
 
     if (bMoveTowardTarget)
         // The DeltaMovement must be projected onto x and y axes.
-        SetActorLocation(
-            FVector(
-                CurrentLocation.X + DeltaMovement * FGenericPlatformMath::Cos(Angle),
-                CurrentLocation.Y + DeltaMovement * FGenericPlatformMath::Sin(Angle),
-                CurrentLocation.Z
-            ),
-            true // We want sweeping!!
-        );
+        bNoCollision = SetActorLocation(
+                        FVector(
+                            CurrentLocation.X + DeltaMovement * FGenericPlatformMath::Cos(Angle),
+                            CurrentLocation.Y + DeltaMovement * FGenericPlatformMath::Sin(Angle),
+                            CurrentLocation.Z
+                        ),
+                        true // Sweep enabled to check for collisions!!
+                    );
     else
-        SetActorLocation(
-            FVector(
-                CurrentLocation.X - DeltaMovement * FGenericPlatformMath::Cos(Angle),
-                CurrentLocation.Y - DeltaMovement * FGenericPlatformMath::Sin(Angle),
-                CurrentLocation.Z
-            ),
-            true // We want sweeping!!
-        );
+        bNoCollision = SetActorLocation(
+                        FVector(
+                            CurrentLocation.X - DeltaMovement * FGenericPlatformMath::Cos(Angle),
+                            CurrentLocation.Y - DeltaMovement * FGenericPlatformMath::Sin(Angle),
+                            CurrentLocation.Z
+                        ),
+                        true // Sweep enabled to check for collisions!!
+                    );
+    UE_LOG(LogTemp, Warning, TEXT("No collision: %i"), bNoCollision);
 
     TotalMovement += DeltaMovement;
-    if (TotalMovement >= PatrolAmplitude)
+    if (TotalMovement >= PatrolAmplitude || !bNoCollision)
     {
         UE_LOG(LogTemp, Warning, TEXT("CurrentLocation: %s"), *CurrentLocation.ToString());
         bMoveTowardTarget = !bMoveTowardTarget;
