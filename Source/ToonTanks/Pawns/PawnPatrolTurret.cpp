@@ -51,17 +51,23 @@ void APawnPatrolTurret::Tick(float DeltaTime)
 
     if (bMoveTowardTarget)
         // The DeltaMovement must be projected onto x and y axes.
-        SetActorLocation(FVector(
-            CurrentLocation.X + DeltaMovement * FGenericPlatformMath::Cos(Angle),
-            CurrentLocation.Y + DeltaMovement * FGenericPlatformMath::Sin(Angle),
-            CurrentLocation.Z
-        ));
+        SetActorLocation(
+            FVector(
+                CurrentLocation.X + DeltaMovement * FGenericPlatformMath::Cos(Angle),
+                CurrentLocation.Y + DeltaMovement * FGenericPlatformMath::Sin(Angle),
+                CurrentLocation.Z
+            ),
+            true // We want sweeping!!
+        );
     else
-        SetActorLocation(FVector(
-            CurrentLocation.X - DeltaMovement * FGenericPlatformMath::Cos(Angle),
-            CurrentLocation.Y - DeltaMovement * FGenericPlatformMath::Sin(Angle),
-            CurrentLocation.Z
-        ));
+        SetActorLocation(
+            FVector(
+                CurrentLocation.X - DeltaMovement * FGenericPlatformMath::Cos(Angle),
+                CurrentLocation.Y - DeltaMovement * FGenericPlatformMath::Sin(Angle),
+                CurrentLocation.Z
+            ),
+            true // We want sweeping!!
+        );
 
     TotalMovement += DeltaMovement;
     if (TotalMovement >= PatrolAmplitude)
