@@ -13,7 +13,6 @@ void ATankGameModeBase::BeginPlay()
     Super::BeginPlay();
     
     TargetTurrets = GetTargetTurretCount();
-    UE_LOG(LogTemp, Warning, TEXT("There are %i turrets."), TargetTurrets);
     PlayerTank = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
     PlayerControllerRef = 
         Cast<APlayerControllerBase>(UGameplayStatics::GetPlayerController(this, 0));
@@ -21,12 +20,18 @@ void ATankGameModeBase::BeginPlay()
 }
 
 // Function to get the number of turrets in the world.
-int32 ATankGameModeBase::GetTargetTurretCount() const
+int32 ATankGameModeBase::GetTargetTurretCount()
 {
     TSubclassOf<APawnTurret> ClassToFind;
     ClassToFind = APawnTurret::StaticClass();
     TArray<AActor*> TurretActors;
     UGameplayStatics::GetAllActorsOfClass(this, ClassToFind, TurretActors);
+
+    // Calculate max score for this game
+    for (AActor* Turret : TurretActors)
+        if (APawnTurret* ActuallyTurret = Cast<APawnTurret>(Turret))
+            MaximumScore += ActuallyTurret->GetTurretScore();
+
     return TurretActors.Num();
 }
 
@@ -43,6 +48,7 @@ void ATankGameModeBase::ActorDied(AActor* DeadActor)
     // If the following cast is successful it means that DeadActor is a APawnTurret ptr (dynamic casting)
     else if (APawnTurret* DestroyedTurret = Cast<APawnTurret>(DeadActor))
     {
+        PlayerScore += DestroyedTurret->GetTurretScore();
         DestroyedTurret->PawnDestroyed();
         TargetTurrets--;
         if(TargetTurrets == 0)
@@ -87,5 +93,5 @@ void ATankGameModeBase::HandleGameOver(bool bPlayerWon)
 {
     // If 0 turrets are left, show win result.
     // If tank was destroyed, show lose result.
-    GameOver(bPlayerWon); // The other BP function
+    GameOver(bPlayerWon, PlayerScore, MaximumScore); // The other BP function
 }

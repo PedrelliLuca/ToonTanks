@@ -27,7 +27,7 @@ public:
 	void GameStart();
 
 	UFUNCTION(BlueprintImplementableEvent) // To handle functionalities in derived blueprint class
-	void GameOver(bool bPlayerWon);
+	void GameOver(bool bPlayerWon, int32 PlayerPoints, int32 MaxPoints);
 
 protected:
 	// Collects relevant infos from map when the game starts
@@ -39,6 +39,9 @@ private:
 	// Variable to control starting countdown duration. int because int32 isn't accepted by BPs.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Loop", meta = (AllowPrivateAccess = "true"))
 	int StartDelay = 3; 
+
+	int32 MaximumScore = 0;
+	int32 PlayerScore = 0;
 
 	UPROPERTY(
 		VisibleAnywhere, 
@@ -52,5 +55,5 @@ private:
 
 	void HandleGameStart();
 	void HandleGameOver(bool bPlayerWon);
-	int32 GetTargetTurretCount() const;
+	int32 GetTargetTurretCount();
 };
