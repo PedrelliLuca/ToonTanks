@@ -13,7 +13,6 @@ void ATankGameModeBase::BeginPlay()
     Super::BeginPlay();
     
     TargetTurrets = GetTargetTurretCount();
-    UE_LOG(LogTemp, Warning, TEXT("There are %i turrets."), TargetTurrets);
     PlayerTank = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
     PlayerControllerRef = 
         Cast<APlayerControllerBase>(UGameplayStatics::GetPlayerController(this, 0));
@@ -33,7 +32,6 @@ int32 ATankGameModeBase::GetTargetTurretCount()
         if (APawnTurret* ActuallyTurret = Cast<APawnTurret>(Turret))
             MaximumScore += ActuallyTurret->GetTurretScore();
 
-    UE_LOG(LogTemp, Warning, TEXT("Maximum score: %i"), MaximumScore);
     return TurretActors.Num();
 }
 
@@ -51,7 +49,6 @@ void ATankGameModeBase::ActorDied(AActor* DeadActor)
     else if (APawnTurret* DestroyedTurret = Cast<APawnTurret>(DeadActor))
     {
         PlayerScore += DestroyedTurret->GetTurretScore();
-        UE_LOG(LogTemp, Warning, TEXT("Current score: %i"), PlayerScore);
         DestroyedTurret->PawnDestroyed();
         TargetTurrets--;
         if(TargetTurrets == 0)
