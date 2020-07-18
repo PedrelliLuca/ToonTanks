@@ -31,3 +31,9 @@ I had to face many challenges:
 - How do collisions affect the turret's movement?
 
 I had a lot of fun working on this!!
+
+### Scoring system
+
+Now the game has a scoring system: game developers can assign a certain amount of points to each turret class.
+
+Each time a turret is destroyed, its value is added to the player score count. At the end of the game, regardless of whether the player won or lost, a widget shows how many points were collected over the total.
