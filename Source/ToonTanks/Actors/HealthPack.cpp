@@ -11,7 +11,7 @@
 AHealthPack::AHealthPack()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	HealthPackMesh = CreateDefaultSubobject<UStaticMeshComponent>(
 		TEXT("HealthPack Mesh")
@@ -30,11 +30,15 @@ void AHealthPack::BeginPlay()
 }
 
 // Called every frame
-// void AHealthPack::Tick(float DeltaTime)
-// {
-// 	Super::Tick(DeltaTime);
+void AHealthPack::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 
-// }
+	// A simple animation
+	SetActorRotation(
+		GetActorRotation() + FRotator(0.f, AngularVelocity * DeltaTime, 0.f)
+	);
+}
 
 // Thanks to dynamic binding, this is automatically called everytime the StaticMesh OnComponentHit
 // function is called (i.e. everytime the mesh hits (or is hit by) something solid.)
@@ -46,13 +50,12 @@ void AHealthPack::OnHit(
 	const FHitResult& Hit
 )
 {
-	UE_LOG(LogTemp, Warning, TEXT("I am inside OnHit!"));
-	// We deal damage only if the other actor exists and we able
+	if (!PlayerTank)
+		return;
+
+	// We heal only if the other actor is the player pawn
 	if (OtherActor != nullptr && PlayerTank == OtherActor)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("I am inside OnHit check!"));
-
-		// We hit the player tank!
 		UGameplayStatics::ApplyDamage(
 			OtherActor,
 			-Healing, // A negative value adds health instead of removing it

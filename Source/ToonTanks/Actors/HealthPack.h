@@ -18,7 +18,7 @@ public:
 	AHealthPack();
 
 	// Called every frame
-	// virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime) override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -37,6 +37,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Healing", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UDamageType> DamageType;
+
+	float AngularVelocity = 50.f;
 
 	// EFFECTS
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects", meta = (AllowPrivateAccess = "true"))
