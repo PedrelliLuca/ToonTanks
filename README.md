@@ -40,6 +40,6 @@ Each time a turret is destroyed, its value is added to the player score count. A
 
 ### Health pack
 
-Health packs heal the player tank on hit if their health is less than the starting one. If the tank is at full health, the health packs can be picked up but they have no affect. The healing amount can be set from the editor.
+Health packs heal the tank at contact if the current health is less than the starting one. If the tank is at full health, healrh packs can be picked up but they have no effect. The healing amount can be set from the editor.
 
-Fun fact: health packs work like projectiles: they deal damage on hit, except of the fact that their damage is negative, i.e. it adds health to the player instead of subtracting it!
+Fun fact: at their core, health packs work like projectiles! They deal damage on hit, except their damage is negative, i.e. it adds health to the player instead of subtracting it!
