@@ -37,3 +37,9 @@ I had a lot of fun working on this!!
 Now the game has a scoring system: game developers can assign a certain amount of points to each turret class.
 
 Each time a turret is destroyed, its value is added to the player score count. At the end of the game, regardless of whether the player won or lost, a widget shows how many points were collected over the total.
+
+### Health pack
+
+Health packs heal the tank at contact if the current health is less than the starting one. If the tank is at full health, healrh packs can be picked up but they have no effect. The healing amount can be set from the editor.
+
+Fun fact: at their core, health packs work like projectiles! They deal damage on hit, except their damage is negative, i.e. it adds health to the player instead of subtracting it!

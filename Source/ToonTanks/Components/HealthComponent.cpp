@@ -31,7 +31,7 @@ void UHealthComponent::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("Health component does not have any reference to the owner!"))	
 }
 
-// Thanks to dynamic binding, this is automatically called whenever the actor is damaged in any way
+// Thanks to dynamic binding, this is automatically called whenever the actor is damaged in any way or when an health pack is picked up
 void UHealthComponent::TakeDamage(
 	AActor* DamagedActor,
 	float Damage,
@@ -44,7 +44,7 @@ void UHealthComponent::TakeDamage(
 		return;
 
 	Health = FMath::Clamp(Health-Damage, 0.f, DefaultHealth);
-	
+
 	if (Health <= 0)
 		if (GameModeRef)
 			// Called only once thanks to the Health == 0 check above.
