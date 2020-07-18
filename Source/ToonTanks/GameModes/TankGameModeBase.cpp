@@ -21,12 +21,19 @@ void ATankGameModeBase::BeginPlay()
 }
 
 // Function to get the number of turrets in the world.
-int32 ATankGameModeBase::GetTargetTurretCount() const
+int32 ATankGameModeBase::GetTargetTurretCount()
 {
     TSubclassOf<APawnTurret> ClassToFind;
     ClassToFind = APawnTurret::StaticClass();
     TArray<AActor*> TurretActors;
     UGameplayStatics::GetAllActorsOfClass(this, ClassToFind, TurretActors);
+
+    // Calculate max score for this game
+    for (AActor* Turret : TurretActors)
+        if (APawnTurret* ActuallyTurret = Cast<APawnTurret>(Turret))
+            MaximumScore += ActuallyTurret->GetTurretScore();
+
+    UE_LOG(LogTemp, Warning, TEXT("Maximum score: %i"), MaximumScore);
     return TurretActors.Num();
 }
 
@@ -43,6 +50,8 @@ void ATankGameModeBase::ActorDied(AActor* DeadActor)
     // If the following cast is successful it means that DeadActor is a APawnTurret ptr (dynamic casting)
     else if (APawnTurret* DestroyedTurret = Cast<APawnTurret>(DeadActor))
     {
+        PlayerScore += DestroyedTurret->GetTurretScore();
+        UE_LOG(LogTemp, Warning, TEXT("Current score: %i"), PlayerScore);
         DestroyedTurret->PawnDestroyed();
         TargetTurrets--;
         if(TargetTurrets == 0)

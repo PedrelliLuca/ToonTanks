@@ -40,6 +40,12 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Loop", meta = (AllowPrivateAccess = "true"))
 	int StartDelay = 3; 
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Scoring System", meta = (AllowPrivateAccess = "true"))
+	int MaximumScore = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Scoring System", meta = (AllowPrivateAccess = "true"))
+	int PlayerScore = 0;
+
 	UPROPERTY(
 		VisibleAnywhere, 
 		BlueprintReadOnly, 
@@ -52,5 +58,5 @@ private:
 
 	void HandleGameStart();
 	void HandleGameOver(bool bPlayerWon);
-	int32 GetTargetTurretCount() const;
+	int32 GetTargetTurretCount();
 };
