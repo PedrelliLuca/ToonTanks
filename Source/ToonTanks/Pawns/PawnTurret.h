@@ -21,7 +21,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Called from TankGameModeBase.cpp
-	int GetTurretScore() const;
+	int32 GetTurretScore() const;
 
 protected:
 
@@ -51,7 +51,7 @@ private:
 	// How many point is this kind of turret is worth to the player
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Scoring System", 
 		meta = (AllowPrivateAccess = "true"))
-	int TurretScore = 50;
+	int32 TurretScore = 50;
 
 	// Timer to bind and unbind CheckFireCondition() at runtime.
 	FTimerHandle FireRateTimerHandle;

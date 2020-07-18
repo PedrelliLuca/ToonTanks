@@ -96,5 +96,5 @@ void ATankGameModeBase::HandleGameOver(bool bPlayerWon)
 {
     // If 0 turrets are left, show win result.
     // If tank was destroyed, show lose result.
-    GameOver(bPlayerWon); // The other BP function
+    GameOver(bPlayerWon, PlayerScore, MaximumScore); // The other BP function
 }

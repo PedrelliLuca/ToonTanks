@@ -68,7 +68,7 @@ void APawnTurret::HandleDestruction()
     Destroy();
 }
 
-int APawnTurret::GetTurretScore() const
+int32 APawnTurret::GetTurretScore() const
 {
     return TurretScore;
 }
