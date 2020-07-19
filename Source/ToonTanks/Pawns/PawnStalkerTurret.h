@@ -16,12 +16,12 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stalker Movement", meta = (AllowPrivateAccess = "true"))
 	float StalkerSpeed = 100.f;
 
-	FVector CurrentLocation;
+	FVector StalkerLocation, PlayerLocation;
 
 	// FUNCTIONS
 	void MoveStalker(float DeltaMovement);
 
-	void RotateStalker(FVector LookAtTarget);
+	void RotateStalker();
 
 protected:
 	// Called when the game starts or when spawned

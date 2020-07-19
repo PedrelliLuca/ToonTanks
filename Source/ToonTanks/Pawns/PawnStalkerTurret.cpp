@@ -24,17 +24,18 @@ void APawnStalkerTurret::Tick(float DeltaTime)
     if (!PlayerPawn)
         return;
 
-    RotateStalker(PlayerPawn->GetActorLocation());
+    PlayerLocation = PlayerPawn->GetActorLocation();
+    StalkerLocation = GetActorLocation();
+    RotateStalker();
     MoveStalker(StalkerSpeed * DeltaTime);
 }
 
-void APawnStalkerTurret::RotateStalker(FVector LookAtTarget)
+void APawnStalkerTurret::RotateStalker()
 {
 	// Update stalker rotation with respect to the world to face the target passed in
 	FRotator StalkerRotation = UKismetMathLibrary::FindLookAtRotation(
-		GetActorLocation(),
-		// We don't want the Z to change
-		FVector(LookAtTarget.X, LookAtTarget.Y, GetActorLocation().Z)
+		StalkerLocation,
+		FVector(PlayerLocation.X, PlayerLocation.Y, StalkerLocation.Z) // We don't want the Z to change
 	); 
 	
 	SetActorRotation(StalkerRotation);
@@ -44,16 +45,16 @@ void APawnStalkerTurret::MoveStalker(float DeltaMovement)
 {
     // Find the unit vector from the stalker to the player
     FVector MovementDirection = UKismetMathLibrary::GetDirectionUnitVector(
-        GetActorLocation(),
-        PlayerPawn->GetActorLocation()
+        StalkerLocation,
+        PlayerLocation
     );
 
     // Move on that direction of DeltaMovement, with sweep active
     SetActorLocation(
         FVector(
-            GetActorLocation().X + MovementDirection.X * DeltaMovement,
-            GetActorLocation().Y + MovementDirection.Y * DeltaMovement,
-            GetActorLocation().Z
+            StalkerLocation.X + MovementDirection.X * DeltaMovement,
+            StalkerLocation.Y + MovementDirection.Y * DeltaMovement,
+            StalkerLocation.Z
         ), 
         true
     );
