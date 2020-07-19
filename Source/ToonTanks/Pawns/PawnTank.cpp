@@ -95,8 +95,6 @@ void APawnTank::HandleDestruction()
     SetActorHiddenInGame(true);
     // 2) Disable inputs
     SetActorTickEnabled(false);
-    // 3) Disable collisions
-    SetActorEnableCollision(false);
 }
 
 bool APawnTank::GetPlayerAlive() const

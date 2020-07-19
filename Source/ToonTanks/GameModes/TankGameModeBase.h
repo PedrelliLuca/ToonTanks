@@ -56,4 +56,5 @@ private:
 	void HandleGameStart();
 	void HandleGameOver(bool bPlayerWon);
 	int32 GetTargetTurretCount();
+	void DisableRemainingTurrets();
 };

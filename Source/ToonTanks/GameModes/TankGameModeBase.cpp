@@ -109,7 +109,22 @@ void ATankGameModeBase::HandleGameStart()
 
 void ATankGameModeBase::HandleGameOver(bool bPlayerWon)
 {
+    if (!bPlayerWon)
+        DisableRemainingTurrets();
+
     // If 0 turrets are left, show win result.
     // If tank was destroyed, show lose result.
     GameOver(bPlayerWon, PlayerScore, MaximumScore); // The other BP function
+}
+
+void ATankGameModeBase::DisableRemainingTurrets()
+{
+    TSubclassOf<APawnTurret> ClassToFind = APawnTurret::StaticClass();
+    TArray<AActor*> TurretActors;
+    UGameplayStatics::GetAllActorsOfClass(this, ClassToFind, TurretActors);
+
+    // Calculate max score for this game
+    for (AActor* Turret : TurretActors)
+        if (APawnTurret* ActuallyTurret = Cast<APawnTurret>(Turret))
+            ActuallyTurret->SetTurretEnabledState(false);
 }
