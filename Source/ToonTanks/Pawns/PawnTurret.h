@@ -24,11 +24,15 @@ public:
 	int32 GetTurretScore() const;
 
 protected:
-
+	// FUNCTIONS
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void HandleDestruction() override;
+
+	// VARIABLES
+	// Stores reference to player.
+	APawnTank* PlayerPawn = nullptr;
 
 private:
 
@@ -56,6 +60,4 @@ private:
 	// Timer to bind and unbind CheckFireCondition() at runtime.
 	FTimerHandle FireRateTimerHandle;
 
-	// Stores reference to player.
-	APawnTank* PlayerPawn = nullptr;
 };
