@@ -33,23 +33,21 @@ int32 ATankGameModeBase::GetTargetTurretCount()
         if (APawnTurret* ActuallyTurret = Cast<APawnTurret>(Turret))
         {
             MaximumScore += ActuallyTurret->GetTurretScore();
-            if (APawnStalkerTurret* ActuallyStalker = Cast<APawnStalkerTurret>(ActuallyTurret))
-            {
-                FTimerHandle StalkerEnableHandle;
+           
+            FTimerHandle TurretEnableHandle;
 
-                FTimerDelegate StalkerEnableDelegate = FTimerDelegate::CreateUObject(
-                    ActuallyStalker,
-                    &APawnStalkerTurret::SetStalkerEnabledState,
-                    true
-                );
+            FTimerDelegate TurretEnableDelegate = FTimerDelegate::CreateUObject(
+                ActuallyTurret,
+                &APawnTurret::SetTurretEnabledState,
+                true
+            );
 
-                GetWorldTimerManager().SetTimer(
-                    StalkerEnableHandle,
-                    StalkerEnableDelegate,
-                    StartDelay,
-                    false // No looping
-                );
-            }
+            GetWorldTimerManager().SetTimer(
+                TurretEnableHandle,
+                TurretEnableDelegate,
+                StartDelay,
+                false // No looping
+            );
         }
 
     return TurretActors.Num();

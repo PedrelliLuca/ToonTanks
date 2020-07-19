@@ -21,11 +21,13 @@ void APawnStalkerTurret::Tick(float DeltaTime)
     // This would move the head, but it's useless since the whole pawn has to move for stalkers.
     // Super::Tick(DeltaTime);
     
-    if (!PlayerPawn || !bMove)
+    if (!PlayerPawn)
         return;
 
     PlayerLocation = PlayerPawn->GetActorLocation();
     StalkerLocation = GetActorLocation();
+
+    // Stalkers can rotate if inactive, but they cannot move
     RotateStalker();
     MoveStalker(StalkerSpeed * DeltaTime);
 }
@@ -43,6 +45,9 @@ void APawnStalkerTurret::RotateStalker()
 
 void APawnStalkerTurret::MoveStalker(float DeltaMovement)
 {
+    if (!bActive)
+        return;
+
     // Find the unit vector from the stalker to the player
     FVector MovementDirection = UKismetMathLibrary::GetDirectionUnitVector(
         StalkerLocation,
@@ -58,9 +63,4 @@ void APawnStalkerTurret::MoveStalker(float DeltaMovement)
         ), 
         true
     );
-}
-
-void APawnStalkerTurret::SetStalkerEnabledState(bool bEnabled)
-{
-    bMove = bEnabled;
 }
