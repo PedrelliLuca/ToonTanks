@@ -19,7 +19,7 @@ private:
 	FVector CurrentLocation;
 
 	// FUNCTIONS
-	// void MoveStalkerTurret(float DeltaMovement);
+	void MoveStalker(float DeltaMovement);
 
 	void RotateStalker(FVector LookAtTarget);
 

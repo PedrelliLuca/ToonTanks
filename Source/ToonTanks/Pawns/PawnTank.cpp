@@ -59,7 +59,7 @@ void APawnTank::CalculateMoveInput(float Value)
     //
     // Y and Z components are set to 0 because our tank is only supposed to move forward and
     // backward based on its rotation.
-    MoveDirection = FVector(Value * MoveSpeed * GetWorld()->DeltaTimeSeconds, 0, 0);;
+    MoveDirection = FVector(Value * MoveSpeed * GetWorld()->DeltaTimeSeconds, 0, 0);
 }
 
 void APawnTank::CalculateRotationInput(float Value)

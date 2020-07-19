@@ -18,15 +18,14 @@ void APawnStalkerTurret::BeginPlay()
 
 void APawnStalkerTurret::Tick(float DeltaTime)
 {
-    // Handles TurretMesh movement
+    // This would move the head, but it's useless since the whole pawn has to move for stalkers.
     // Super::Tick(DeltaTime);
     
     if (!PlayerPawn)
         return;
 
-    // float DeltaMovement = StalkerSpeed * DeltaTime;
     RotateStalker(PlayerPawn->GetActorLocation());
-
+    MoveStalker(StalkerSpeed * DeltaTime);
 }
 
 void APawnStalkerTurret::RotateStalker(FVector LookAtTarget)
@@ -41,16 +40,21 @@ void APawnStalkerTurret::RotateStalker(FVector LookAtTarget)
 	SetActorRotation(StalkerRotation);
 }
 
-// void APawnStalkerTurret::MoveStalkerTurret(float DeltaMovement)
-// {
-//     if (!PlayerPawn)
-//         return;
-    
-//     FRotator StalkerRotation = UKismetMathLibrary::FindLookAtRotation(
-// 		RootComponent->GetComponentLocation(),
-// 		// We don't want the Z to change
-// 		FVector(LookAtTarget.X, LookAtTarget.Y, TurretMesh->GetComponentLocation().Z)
-// 	); 
-	
-// 	TurretMesh->SetWorldRotation(TurretRotation);
-// }
+void APawnStalkerTurret::MoveStalker(float DeltaMovement)
+{
+    // Find the unit vector from the stalker to the player
+    FVector MovementDirection = UKismetMathLibrary::GetDirectionUnitVector(
+        GetActorLocation(),
+        PlayerPawn->GetActorLocation()
+    );
+
+    // Move on that direction of DeltaMovement, with sweep active
+    SetActorLocation(
+        FVector(
+            GetActorLocation().X + MovementDirection.X * DeltaMovement,
+            GetActorLocation().Y + MovementDirection.Y * DeltaMovement,
+            GetActorLocation().Z
+        ), 
+        true
+    );
+}
