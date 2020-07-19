@@ -16,6 +16,8 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stalker Movement", meta = (AllowPrivateAccess = "true"))
 	float StalkerSpeed = 100.f;
 
+	bool bMove = false;
+
 	FVector StalkerLocation, PlayerLocation;
 
 	// FUNCTIONS
@@ -32,4 +34,6 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void SetStalkerEnabledState(bool bEnabled);
 };

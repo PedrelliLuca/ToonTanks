@@ -7,6 +7,7 @@
 #include "ToonTanks/PlayerControllers/PlayerControllerBase.h"
 #include "ToonTanks/Pawns/PawnTank.h"
 #include "ToonTanks/Pawns/PawnTurret.h"
+#include "ToonTanks/Pawns/PawnStalkerTurret.h"
 
 void ATankGameModeBase::BeginPlay()
 {
@@ -30,7 +31,26 @@ int32 ATankGameModeBase::GetTargetTurretCount()
     // Calculate max score for this game
     for (AActor* Turret : TurretActors)
         if (APawnTurret* ActuallyTurret = Cast<APawnTurret>(Turret))
+        {
             MaximumScore += ActuallyTurret->GetTurretScore();
+            if (APawnStalkerTurret* ActuallyStalker = Cast<APawnStalkerTurret>(ActuallyTurret))
+            {
+                FTimerHandle StalkerEnableHandle;
+
+                FTimerDelegate StalkerEnableDelegate = FTimerDelegate::CreateUObject(
+                    ActuallyStalker,
+                    &APawnStalkerTurret::SetStalkerEnabledState,
+                    true
+                );
+
+                GetWorldTimerManager().SetTimer(
+                    StalkerEnableHandle,
+                    StalkerEnableDelegate,
+                    StartDelay,
+                    false // No looping
+                );
+            }
+        }
 
     return TurretActors.Num();
 }

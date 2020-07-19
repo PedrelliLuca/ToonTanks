@@ -21,7 +21,7 @@ void APawnStalkerTurret::Tick(float DeltaTime)
     // This would move the head, but it's useless since the whole pawn has to move for stalkers.
     // Super::Tick(DeltaTime);
     
-    if (!PlayerPawn)
+    if (!PlayerPawn || !bMove)
         return;
 
     PlayerLocation = PlayerPawn->GetActorLocation();
@@ -58,4 +58,9 @@ void APawnStalkerTurret::MoveStalker(float DeltaMovement)
         ), 
         true
     );
+}
+
+void APawnStalkerTurret::SetStalkerEnabledState(bool bEnabled)
+{
+    bMove = bEnabled;
 }
