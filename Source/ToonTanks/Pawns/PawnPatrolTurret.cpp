@@ -23,6 +23,9 @@ void APawnPatrolTurret::Tick(float DeltaTime)
     // Handles TurretMesh movement
     Super::Tick(DeltaTime);
 
+    if (!bActive) // Patrolling turrets do not move if inactive
+        return;
+
     TotalMovement += PatrolSpeed * DeltaTime;
     float DeltaMovement = PatrolSpeed * DeltaTime;
 

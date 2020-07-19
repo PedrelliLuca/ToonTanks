@@ -41,6 +41,9 @@ void APawnTurret::Tick(float DeltaTime)
 
 void APawnTurret::CheckFireCondition()
 {
+    if (!bActive) // Inactive turrets cannot fire
+        return;
+
     // If we don't have a valid reference to the player or he lost, we don't do anything.
     if (!PlayerPawn || !PlayerPawn->GetPlayerAlive())
         return;
@@ -71,4 +74,9 @@ void APawnTurret::HandleDestruction()
 int32 APawnTurret::GetTurretScore() const
 {
     return TurretScore;
+}
+
+void APawnTurret::SetTurretEnabledState(bool bEnabled)
+{
+    bActive = bEnabled;
 }
