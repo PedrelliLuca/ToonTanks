@@ -43,3 +43,7 @@ Each time a turret is destroyed, its value is added to the player score count. A
 Health packs heal the tank at contact if the current health is less than the starting one. If the tank is at full health, healrh packs can be picked up but they have no effect. The healing amount can be set from the editor.
 
 Fun fact: at their core, health packs work like projectiles! They deal damage on hit, except their damage is negative, i.e. it adds health to the player instead of subtracting it!
+
+### PawnStalkerTurret
+
+Turret that moves towards the player. The AI is very very minimal (for example, the turret does nothing to avoid collisions).
