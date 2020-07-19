@@ -7,6 +7,7 @@
 #include "ToonTanks/PlayerControllers/PlayerControllerBase.h"
 #include "ToonTanks/Pawns/PawnTank.h"
 #include "ToonTanks/Pawns/PawnTurret.h"
+#include "ToonTanks/Pawns/PawnStalkerTurret.h"
 
 void ATankGameModeBase::BeginPlay()
 {
@@ -30,7 +31,24 @@ int32 ATankGameModeBase::GetTargetTurretCount()
     // Calculate max score for this game
     for (AActor* Turret : TurretActors)
         if (APawnTurret* ActuallyTurret = Cast<APawnTurret>(Turret))
+        {
             MaximumScore += ActuallyTurret->GetTurretScore();
+           
+            FTimerHandle TurretEnableHandle;
+
+            FTimerDelegate TurretEnableDelegate = FTimerDelegate::CreateUObject(
+                ActuallyTurret,
+                &APawnTurret::SetTurretEnabledState,
+                true
+            );
+
+            GetWorldTimerManager().SetTimer(
+                TurretEnableHandle,
+                TurretEnableDelegate,
+                StartDelay,
+                false // No looping
+            );
+        }
 
     return TurretActors.Num();
 }
@@ -91,7 +109,22 @@ void ATankGameModeBase::HandleGameStart()
 
 void ATankGameModeBase::HandleGameOver(bool bPlayerWon)
 {
+    if (!bPlayerWon)
+        DisableRemainingTurrets();
+
     // If 0 turrets are left, show win result.
     // If tank was destroyed, show lose result.
     GameOver(bPlayerWon, PlayerScore, MaximumScore); // The other BP function
+}
+
+void ATankGameModeBase::DisableRemainingTurrets()
+{
+    TSubclassOf<APawnTurret> ClassToFind = APawnTurret::StaticClass();
+    TArray<AActor*> TurretActors;
+    UGameplayStatics::GetAllActorsOfClass(this, ClassToFind, TurretActors);
+
+    // Calculate max score for this game
+    for (AActor* Turret : TurretActors)
+        if (APawnTurret* ActuallyTurret = Cast<APawnTurret>(Turret))
+            ActuallyTurret->SetTurretEnabledState(false);
 }

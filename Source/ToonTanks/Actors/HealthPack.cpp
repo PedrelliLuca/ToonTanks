@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "ToonTanks/Pawns/PawnTank.h"
+#include "ToonTanks/Pawns/PawnTurret.h"
 
 
 // Sets default values
@@ -80,4 +81,7 @@ void AHealthPack::OnHit(
 		// We finally remove the health pack from play
 		Destroy();
 	}
+	// This is to make turrets ignore collisions with health packs
+	else if (OtherActor->IsA(APawnTurret::StaticClass())) 
+		Cast<APawnTurret>(OtherActor)->MoveIgnoreActorAdd(this);
 }

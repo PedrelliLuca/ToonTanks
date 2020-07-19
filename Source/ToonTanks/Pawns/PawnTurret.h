@@ -23,15 +23,24 @@ public:
 	// Called from TankGameModeBase.cpp
 	int32 GetTurretScore() const;
 
-protected:
+	void SetTurretEnabledState(bool bEnabled);
 
+protected:
+	// FUNCTIONS
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void HandleDestruction() override;
 
-private:
+	// VARIABLES
+	// Stores reference to player.
+	APawnTank* PlayerPawn = nullptr;
 
+	// Turrets start inactive and become active after StartDelay (see TankGameModeBase.cpp)
+	// Inactive turrets can move their head, but they cannot fire.
+	bool bActive = false;
+
+private:
 	// Function which will be called on a repeating timer.
 	void CheckFireCondition();
 
@@ -56,6 +65,4 @@ private:
 	// Timer to bind and unbind CheckFireCondition() at runtime.
 	FTimerHandle FireRateTimerHandle;
 
-	// Stores reference to player.
-	APawnTank* PlayerPawn = nullptr;
 };
